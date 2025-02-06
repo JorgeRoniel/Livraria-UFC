@@ -28,4 +28,16 @@ public class User {
     @Column
     private BigDecimal balance;
 
+    public User(String name, String email, String pass, BigDecimal balance) {
+        this.name = name;
+        this.email = email;
+        this.pass = pass;
+        this.balance = balance;
+    }
+
+    public User(String name, String email, BigDecimal balance) {
+        this.name = name;
+        this.email = email;
+        this.balance = balance;
+    }
 }
