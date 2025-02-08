@@ -1,0 +1,182 @@
+body {
+  background-image: url('img/biblioteca.jpg');
+  object-fit: cover;
+}
+
+.container {
+  position: relative;
+  top: 50px;
+  padding: 1.5rem;
+  max-width: 780px;
+  margin: 0 auto;
+  background: rgba(139, 92, 246, 0.2);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 1rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.div-topo{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.espaco-vazio{
+  flex-grow: 1;
+}
+
+.titulo{
+  color: white;
+  position: relative;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0px auto;
+  bottom: 5px;
+  flex-grow: 2;
+}
+
+.cadastro{
+  margin-bottom: 10px;
+}
+
+.search-input {
+  margin: 0.5rem 0rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.search-input input, .inputs input {
+  flex-grow: 1;
+  background-color: white;
+  color: black;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+}
+
+.notification {
+  position: absolute;
+  top: -2.8rem;
+  left: 17rem;
+  background-color: #027400;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.card {
+  background-color: white;
+  color: black;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 0.375rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.button {
+  background-color: #10b981;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.logout{
+  margin-right: 2.5rem;
+  background-color: #f44336;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  border: none;
+  cursor: pointer;
+}
+
+.div-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.status {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  min-width: 100px;
+}
+
+.status.efetuada {
+  background-color: #4caf50;
+  color: white;
+}
+
+.status.processando {
+  background-color: #ffcc00;
+  color: black;
+}
+
+.status.falhou {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+.status.nenhuma {
+  background-color: #ccc;
+  color: black;
+}
+
+
+.logout:hover{
+  background-color: #e53935;
+}
+
+.button:hover {
+  background-color: #047857;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-self: baseline;
+  margin-top: 1rem;
+}
+
+.pagination .button {
+  margin-right: 0.5rem;
+}
+
+@media (max-width: 850px){
+  .container{
+    width: 80%;
+  }
+}
+
+@media (max-width: 610px){
+  .titulo{
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 460px){
+  .top-bar{
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .logout{
+    margin: 0;
+  }
+}
