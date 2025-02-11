@@ -14,10 +14,8 @@ public class ServerRMI {
 
             OrdersImpl server = new OrdersImpl();
 
-            // Exportando o objeto remoto
             OrderServices stub = (OrderServices) UnicastRemoteObject.exportObject(server, 0);
 
-            // Criando e registrando no RMI Registry
             Registry registry = LocateRegistry.createRegistry(1099);
             registry.rebind("OrderServices", stub);
 
