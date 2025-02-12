@@ -19,7 +19,8 @@ public class ServerRMI {
             Registry registry = LocateRegistry.createRegistry(1099);
             registry.rebind("OrderServices", stub);
 
-            System.out.println("RMI Server is running...");
+            System.out.println("Server is running...");
+            Thread.sleep(Long.MAX_VALUE);
         } catch (Exception e) {
             e.printStackTrace();
         }

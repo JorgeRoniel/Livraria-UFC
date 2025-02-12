@@ -50,7 +50,7 @@ public class OrdersImpl implements OrderServices {
 
             Order order = new Order(s, bigDecimal, i);
 
-            String sql = "INSERT INTO tb_order (book_name, price, status, user_id) VALUES ('"+order.getBookName()+"',"+order.getPrice()+", '"+order.getStatus()+"', "+order.getUserId()+" );";
+            String sql = "INSERT INTO orders (book_name, price, status, user_id) VALUES ('"+order.getBookName()+"',"+order.getPrice()+", '"+order.getStatus()+"', "+order.getUserId()+" );";
             st.executeUpdate(sql);
 
             c.close();
@@ -66,7 +66,7 @@ public class OrdersImpl implements OrderServices {
             Connection c = conn();
             Statement st = statement();
 
-            String sql = "SELECT o.id, o.book_name, o.price, o.status FROM tb_order o INNER JOIN tb_user u ON o.user_id = "+i+";";
+            String sql = "SELECT o.id, o.book_name, o.price, o.status FROM orders o INNER JOIN users u ON o.user_id = "+i+";";
             st.execute(sql);
 
             ResultSet rs = st.getResultSet();
@@ -78,8 +78,6 @@ public class OrdersImpl implements OrderServices {
                 order.setBookName(rs.getString("book_name"));
                 order.setPrice(rs.getBigDecimal("price"));
                 order.setStatus(rs.getString("status"));
-
-                System.out.println(order.getBookName());
                 
                 orderList.add(order);
             }
@@ -97,7 +95,7 @@ public class OrdersImpl implements OrderServices {
             Connection c = conn();
             Statement st = statement();
 
-            String sql = "DELETE FROM tb_order WHERE id = "+i+";";
+            String sql = "DELETE FROM orders WHERE id = "+i+";";
             st.executeUpdate(sql);
 
             c.close();

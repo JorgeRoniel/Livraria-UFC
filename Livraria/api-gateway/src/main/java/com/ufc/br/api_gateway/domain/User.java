@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 
 
 @Entity
-@Table(name = "tb_user")
+@Table(name = "users")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
