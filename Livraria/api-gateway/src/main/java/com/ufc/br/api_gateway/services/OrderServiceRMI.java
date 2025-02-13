@@ -15,7 +15,7 @@ public class OrderServiceRMI {
 
     public String crateOrderRMI(String book_name, BigDecimal price, int userId){
         try {
-            Registry registry = LocateRegistry.getRegistry("server-rmi", 1099);
+            Registry registry = LocateRegistry.getRegistry("rmi-server", 1099);
 
             OrderServices stub = (OrderServices) registry.lookup("OrderServices");
 
@@ -29,7 +29,7 @@ public class OrderServiceRMI {
 
     public ArrayList<Order> listOrders(int userId){
         try {
-            Registry registry = LocateRegistry.getRegistry("localhost", 1099);
+            Registry registry = LocateRegistry.getRegistry("rmi-server", 1099);
 
             OrderServices stub = (OrderServices) registry.lookup("OrderServices");
 
@@ -43,7 +43,7 @@ public class OrderServiceRMI {
 
     public String deleteOrder(int id){
         try {
-            Registry registry = LocateRegistry.getRegistry("localhost", 1099);
+            Registry registry = LocateRegistry.getRegistry("rmi-server", 1099);
 
             OrderServices stub = (OrderServices) registry.lookup("OrderServices");
 

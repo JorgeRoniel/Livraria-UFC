@@ -10,9 +10,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrdersImpl implements OrderServices {
+public class OrdersServiceImpl implements OrderServices {
 
-    private static final String DB_URL = "jdbc:postgresql://localhost:5433/livraria_ufc";
+    private static final String DB_URL = "jdbc:postgresql://postgres:5432/livraria_ufc";
     private static final String DB_USER = "postgres";
     private static final String DB_PASS = "Password123#@!";
 
@@ -39,7 +39,7 @@ public class OrdersImpl implements OrderServices {
         return s;
     }
 
-    public OrdersImpl(){
+    public OrdersServiceImpl() {
     }
 
     @Override
@@ -56,21 +56,21 @@ public class OrdersImpl implements OrderServices {
             c.close();
             return "Order Created!";
         } catch (SQLException e) {
-            return e.toString();
+            return "Error while creating order!";
         }
     }
 
     @Override
-    public ArrayList<Order> listOrders(int i) {
+    public ArrayList<Order> listOrders(int i) throws RemoteException{
         try {
             Connection c = conn();
             Statement st = statement();
 
-            String sql = "SELECT o.id, o.book_name, o.price, o.status FROM orders o INNER JOIN users u ON o.user_id = "+i+";";
+            String sql = "SELECT o.id, o.book_name, o.price, o.status, o.user_id FROM orders o INNER JOIN users u ON o.user_id = "+i+";";
             st.execute(sql);
 
             ResultSet rs = st.getResultSet();
-            
+
             ArrayList<Order> orderList = new ArrayList<>();
             while (rs.next()){
                 Order order = new Order();
@@ -78,7 +78,8 @@ public class OrdersImpl implements OrderServices {
                 order.setBookName(rs.getString("book_name"));
                 order.setPrice(rs.getBigDecimal("price"));
                 order.setStatus(rs.getString("status"));
-                
+                order.setUserId(rs.getInt("user_id"));
+
                 orderList.add(order);
             }
 
@@ -90,7 +91,7 @@ public class OrdersImpl implements OrderServices {
     }
 
     @Override
-    public String deleteOrder(int i) {
+    public String deleteOrder(int i) throws RemoteException{
         try {
             Connection c = conn();
             Statement st = statement();
@@ -101,7 +102,7 @@ public class OrdersImpl implements OrderServices {
             c.close();
             return "Order Deleted!";
         } catch (Exception e) {
-            return "Error!";
+            return "Error while deleting order!";
         }
     }
 }

@@ -24,7 +24,7 @@ public class OrderController {
         if(response.equals("Order Created!")){
             return ResponseEntity.ok().build();
         }
-        return ResponseEntity.badRequest().body(response);
+        return ResponseEntity.badRequest().body("Error while Creating Order...");
     }
 
     @GetMapping("/user/{id}")
@@ -37,6 +37,6 @@ public class OrderController {
     public ResponseEntity deleteOrder(@PathVariable("id") int id){
         String response = this.serviceRMI.deleteOrder(id);
         if(response.equals("Order Deleted!")) return ResponseEntity.ok().build();
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.badRequest().body("Error while Deleting Order...");
     }
 }

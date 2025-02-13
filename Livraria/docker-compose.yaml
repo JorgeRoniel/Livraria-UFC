@@ -1,9 +1,9 @@
 services:
-  server-rmi:
+  rmi-server:
     build:
-      context: ./OrderServer2
+      context: ./OrderServer
       dockerfile: Dockerfile
-    container_name: server-rmi
+    container_name: rmi-server
     ports:
       - "1099:1099"
     depends_on:
