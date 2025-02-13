@@ -43,6 +43,18 @@ services:
     networks:
       - app-network
 
+  client:
+    build:
+      context: ./livraria-client
+      dockerfile: Dockerfile
+    container_name: livraria-client
+    ports:
+      - "80:80"
+    depends_on:
+      - api-gateway
+    networks:
+      - app-network
+
 volumes:
   postgres_data:
 

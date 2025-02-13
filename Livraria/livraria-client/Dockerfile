@@ -5,13 +5,14 @@ FROM node:18 AS build
 WORKDIR /app
 
 # Copia os arquivos do projeto
-COPY package.json package-lock.json ./
+COPY package.json package-lock.json ./ 
+
 RUN npm install
 
 COPY . .
 
 # Compila o projeto para produção
-RUN vite build
+RUN npx vite build
 
 # Usa uma imagem leve do Nginx para servir os arquivos
 FROM nginx:alpine
