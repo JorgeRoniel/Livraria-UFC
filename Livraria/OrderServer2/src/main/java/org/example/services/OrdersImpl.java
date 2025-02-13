@@ -55,8 +55,8 @@ public class OrdersImpl implements OrderServices {
 
             c.close();
             return "Order Created!";
-        } catch (Exception e) {
-            return "Error!";
+        } catch (SQLException e) {
+            return e.toString();
         }
     }
 

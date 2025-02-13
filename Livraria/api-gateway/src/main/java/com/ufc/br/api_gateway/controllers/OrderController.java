@@ -24,7 +24,7 @@ public class OrderController {
         if(response.equals("Order Created!")){
             return ResponseEntity.ok().build();
         }
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.badRequest().body(response);
     }
 
     @GetMapping("/user/{id}")

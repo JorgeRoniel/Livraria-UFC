@@ -1,0 +1,51 @@
+services:
+  server-rmi:
+    build:
+      context: ./OrderServer2
+      dockerfile: Dockerfile
+    container_name: server-rmi
+    ports:
+      - "1099:1099"
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    container_name: api-gateway-jorge
+    depends_on:
+      - postgres
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/livraria_ufc
+      - SPRING_DATASOURCE_USER=postgres
+      - SPRING_DATASOURCE_PASSWORD=Password123#@!
+      - RMI_SERVER=server-rmi
+      - RMI_PORT=1099
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres_db
+    environment:
+      - POSTGRES_DB=livraria_ufc
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Password123#@!
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge
