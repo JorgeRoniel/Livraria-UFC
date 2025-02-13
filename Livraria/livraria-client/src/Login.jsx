@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
-import API_BASE_URL from "./config";
+import VITE_API_BASE_URL from "./config";
 
 export default function Login({ onLogin }) {
+  const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -24,7 +25,7 @@ export default function Login({ onLogin }) {
     setError(null);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
+      const response = await fetch(`${VITE_API_BASE_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -39,6 +40,8 @@ export default function Login({ onLogin }) {
     } catch (error) {
       setError(error.message);
     } finally {
+      onLogin();
+      navigate("/");
       setLoading(false);
     }
   };
@@ -49,10 +52,10 @@ export default function Login({ onLogin }) {
     setError(null);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/auth/create`, {
+      const response = await fetch(`${VITE_API_BASE_URL}/api/auth/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ nome, email, password, balance: 1000}),
       });
 
       if (!response.ok) throw new Error("Erro ao cadastrar usuário");
@@ -73,7 +76,24 @@ export default function Login({ onLogin }) {
             Registre-se!
           </button>
         ) : (
+          <div className="register-form">
+          <div className="header-cadastro">
+            <button
+              className="back-button-login"
+              onClick={() => setShowRegister(false)}
+            >
+              ⮜
+            </button>
+            <div className="cadastro-conta">Registro</div>
+          </div>
           <form className="form" onSubmit={handleCadastroSubmit}>
+          <input
+              type="text"
+              placeholder="Nome do Cliente"
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
+              required
+            />
             <input
               type="email"
               placeholder="Email"
@@ -88,10 +108,23 @@ export default function Login({ onLogin }) {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <button type="submit" className="button" disabled={loading}>
-              {loading ? "Cadastrando..." : "Registrar"}
-            </button>
+            <div className="baixo">
+              <button type="submit" className="button" disabled={loading}>
+                {loading ? "Cadastrando..." : "Registrar"}
+              </button>
+              <button
+                className="clear"
+                type="button"
+                onClick={() => {
+                  setEmail("");
+                  setPassword("");
+                }}
+              >
+                Limpar
+              </button>
+            </div>
           </form>
+        </div>
         )}
       </div>
       {!showRegister && (
