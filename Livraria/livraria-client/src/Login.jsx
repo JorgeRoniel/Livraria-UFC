@@ -43,8 +43,6 @@ export default function Login({ onLogin }) {
     } catch (error) {
       setError(error.message);
     } finally {
-      onLogin();
-      navigate("/");
       setLoading(false);
     }
   };
