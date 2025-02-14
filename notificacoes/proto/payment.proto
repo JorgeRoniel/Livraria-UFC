@@ -1,0 +1,15 @@
+syntax = "proto3";
+ package proto;
+ 
+ service PaymentNotification {
+     rpc NotifyPaymentStatus (PaymentRequest) returns (PaymentResponse);
+ }
+ 
+ message PaymentRequest {
+     string order_id = 1;
+     string status = 2;
+ }
+ 
+ message PaymentResponse {
+     bool ack = 1;
+ }
