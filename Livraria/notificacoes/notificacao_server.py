@@ -1,19 +1,27 @@
 import asyncio
 import grpc
 import websockets
+import json
 from concurrent import futures
-from proto import payment_pb2, payment_pb2_grpc
+from pagamento.grpc.protos import pagamento_pb2, pagamento_pb2_grpc
 
 # Servidor gRPC para receber notificações do servidor de pagamentos
-class ServicoNotificacao(payment_pb2_grpc.PaymentNotificationServicer):
+class ServicoNotificacao(pagamento_pb2_grpc.NotificacaoServiceServicer):
     def __init__(self, websocket_manager):
         self.websocket_manager = websocket_manager
 
-    async def NotificarStatusPagamento(self, request, context):
-        mensagem = f"Pedido {request.order_id} atualizado para status {request.status}"
-        print(f"Recebido: {mensagem}")
-        await self.websocket_manager.transmitir(mensagem)
-        return payment_pb2.PaymentResponse(ack=True)
+    async def NotificarPagamento(self, request, context):
+        print(f"Recebido: Pedido {request.id_pedido}, Cliente {request.id_cliente}, "
+              f"Valor R${request.valor:.2f}, Status {request.status}")
+        
+        await self.websocket_manager.transmitir(
+            id_pedido=request.id_pedido,
+            id_cliente=request.id_cliente,
+            valor=request.valor,
+            status=request.status
+        )
+
+        return pagamento_pb2.NotificacaoResposta(mensagem="Notificação enviada com sucesso")
 
 # Gerenciador de WebSockets
 class GerenciadorWebSocket:
@@ -27,9 +35,15 @@ class GerenciadorWebSocket:
         finally:
             self.clients.remove(websocket)
 
-    async def transmitir(self, mensagem):
+    async def transmitir(self, id_pedido, id_cliente, valor, status):
         if self.clients:
-            await asyncio.wait([client.send(mensagem) for client in self.clients])
+            mensagem_json = json.dumps({
+                "id_pedido": id_pedido,
+                "id_cliente": id_cliente,
+                "valor": valor,
+                "status": status
+            })
+            await asyncio.wait([client.send(mensagem_json) for client in self.clients])
 
 async def servidor_websocket(gerenciador):
     async with websockets.serve(gerenciador.registrar, "0.0.0.0", 8765):
@@ -37,7 +51,7 @@ async def servidor_websocket(gerenciador):
 
 def iniciar_grpc(gerenciador):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    payment_pb2_grpc.add_PaymentNotificationServicer_to_server(ServicoNotificacao(gerenciador), server)
+    pagamento_pb2_grpc.add_NotificacaoServiceServicer_to_server(ServicoNotificacao(gerenciador), server)
     server.add_insecure_port("[::]:50051")
     server.start()
     print("Servidor gRPC rodando na porta 50051")
