@@ -1,4 +1,17 @@
 services:
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=livraria_ufc
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Password123#@!
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
   rmi-server:
     build:
       context: ./OrderServer
@@ -26,20 +39,6 @@ services:
       - RMI_PORT=1099
     ports:
       - "8080:8080"
-    networks:
-      - app-network
-
-  postgres:
-    image: postgres:latest
-    container_name: postgres_db
-    environment:
-      - POSTGRES_DB=livraria_ufc
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=Password123#@!
-    ports:
-      - "5433:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
     networks:
       - app-network
 

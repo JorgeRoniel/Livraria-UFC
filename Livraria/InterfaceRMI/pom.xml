@@ -17,7 +17,7 @@
     <dependencies>
         <dependency>
             <groupId>org.example</groupId>
-            <artifactId>OrderServer2</artifactId>
+            <artifactId>OrderServer</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
