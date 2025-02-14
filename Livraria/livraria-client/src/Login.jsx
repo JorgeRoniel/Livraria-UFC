@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
-import VITE_API_BASE_URL from "./config";
+import { VITE_API_BASE_URL, VITE_NOTIFICATIONS_WS_URL } from "./config";
+
 
 export default function Login({ onLogin }) {
   const [nome, setNome] = useState("");
@@ -35,6 +36,8 @@ export default function Login({ onLogin }) {
       if (!response.ok) throw new Error(data.message || "Erro ao fazer login");
 
       localStorage.setItem("authToken", JSON.stringify(data.token));
+      localStorage.setItem("userBalance", data.balance);
+      localStorage.setItem("userId", data.userId);
       onLogin();
       navigate("/");
     } catch (error) {
@@ -118,6 +121,7 @@ export default function Login({ onLogin }) {
                 onClick={() => {
                   setEmail("");
                   setPassword("");
+                  setNome("");
                 }}
               >
                 Limpar

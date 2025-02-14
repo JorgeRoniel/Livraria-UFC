@@ -26,6 +26,11 @@ body {
   gap: 10px;
 }
 
+.mensagem{
+  color: white;
+  justify-self: center;
+}
+
 .espaco-vazio{
   flex-grow: 1;
 }
