@@ -19,4 +19,4 @@ ENV FLASK_APP=/api/controllers.py
 # Expõe a porta em que a aplicação Flask será executada
 EXPOSE 5000
 
-CMD ["flask", "run", "--host=0.0.0.0"]
+CMD ["python3", "api/controllers.py"]
