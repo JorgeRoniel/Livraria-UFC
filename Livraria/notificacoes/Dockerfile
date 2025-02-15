@@ -2,12 +2,14 @@ FROM python:3.9
 
 WORKDIR /app
 
-COPY . .
+COPY notificacoes /app/notificacoes
 
-ENV PYTHONPATH=/app/livraria
+COPY pagamento /app/pagamento
+
+ENV PYTHONPATH=/app
 
 RUN pip install grpcio grpcio-tools websockets
 
 EXPOSE 8765
 
-CMD ["python", "notificacao_server.py"]
+CMD ["python", "notificacoes/notificacao_server.py"]

@@ -123,7 +123,7 @@ export default function Login({ onLogin, onBalanceUpdate}) {
                   onClick={() => {
                     setEmail("");
                     setPassword("");
-                    setNome("");
+                    setName("");
                   }}
                 >
                   Limpar

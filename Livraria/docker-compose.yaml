@@ -56,8 +56,8 @@ services:
 
   notificacoes:
     build:
-      context: ./notificacoes
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: notificacoes/Dockerfile
     container_name: notificacoes
     ports:
       - "8765:8765"
