@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+sqlalchemy
+psycopg2
+grpcio
+grpcio-tools
+grpcio-reflection
