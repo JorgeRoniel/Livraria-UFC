@@ -50,7 +50,6 @@ export default function Bookstore() {
       });
 
     const socketConnection = new WebSocket(VITE_NOTIFICATIONS_WS_URL);
-    setSocket(socketConnection);
 
     socketConnection.onmessage = (event) => {
       try {
@@ -58,7 +57,7 @@ export default function Bookstore() {
         if (data.id_pedido && data.status) {
           setBooksData((prevBooks) =>
             prevBooks.map((book) =>
-              book.id === data.orderId ? { ...book, status: data.status } : book
+              book.id === data.id_pedido ? { ...book, status: data.status } : book
             )
           );
 
@@ -80,6 +79,11 @@ export default function Bookstore() {
       socketConnection.close();
     };
   }, []);
+
+  const handleBalanceUpdate = (newBalance) => {
+    setUserBalance(newBalance);
+    localStorage.setItem("userBalance", newBalance);
+  };
 
   const handleLogout = () => {
     logout();
@@ -228,7 +232,7 @@ export default function Bookstore() {
           path="/editar-conta"
           element={
             isLoggedIn ? (
-              <EditarConta />
+              <EditarConta onBalanceUpdate={handleBalanceUpdate} />
             ) : (
               <Login onLogin={() => setIsLoggedIn(true)} />
             )

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./EditarConta.css";
 import { VITE_API_BASE_URL } from "./config";
 
-export default function EditarConta() {
+export default function EditarConta({ onBalanceUpdate }) {
   const [name, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [balance, setSaldo] = useState("");
@@ -11,7 +11,7 @@ export default function EditarConta() {
   const navigate = useNavigate();
 
   const userId = localStorage.getItem("userId");
-
+  
   const editarConta = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -28,7 +28,11 @@ export default function EditarConta() {
       );
 
       if (response.ok) {
-        localStorage.setItem("userBalance", parseFloat(balance));
+        const newBalance = parseFloat(balance);
+        localStorage.setItem("userBalance", newBalance);
+        if (onBalanceUpdate) {
+          onBalanceUpdate(newBalance);
+        }
         alert("Conta atualizada com sucesso!");
         navigate("/");
       } else {

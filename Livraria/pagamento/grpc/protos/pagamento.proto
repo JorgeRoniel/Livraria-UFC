@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package pagamento;
+
+service NotificacaoService {
+  rpc NotificarPagamento (NotificacaoRequest) returns (NotificacaoResposta);
+}
+
+message NotificacaoRequest {
+  int32 id_pedido = 1;
+  int32 id_cliente = 2;
+  float valor = 3;
+  string status = 4;
+}
+
+message NotificacaoResposta {
+  string mensagem = 1;
+}

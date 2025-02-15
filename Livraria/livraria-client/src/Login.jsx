@@ -4,7 +4,7 @@ import "./Login.css";
 import { VITE_API_BASE_URL, VITE_NOTIFICATIONS_WS_URL } from "./config";
 
 export default function Login({ onLogin }) {
-  const [nome, setNome] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -93,8 +93,8 @@ export default function Login({ onLogin }) {
               <input
                 type="text"
                 placeholder="Nome do Cliente"
-                value={nome}
-                onChange={(e) => setNome(e.target.value)}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 required
               />
               <input
