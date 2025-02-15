@@ -59,6 +59,10 @@ services:
       context: ./notificacoes
       dockerfile: Dockerfile
     container_name: notificacoes
+    ports:
+      - "8765:8765"
+    depends_on:
+     - pagamentos
     networks:
       - app-network
 

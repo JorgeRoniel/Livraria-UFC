@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { VITE_API_BASE_URL, VITE_NOTIFICATIONS_WS_URL } from "./config";
 
-export default function Login({ onLogin }) {
+export default function Login({ onLogin, onBalanceUpdate}) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,6 +37,7 @@ export default function Login({ onLogin }) {
       localStorage.setItem("authToken", data.token);
       localStorage.setItem("userBalance", data.balance);
       localStorage.setItem("userId", data.id);
+      onBalanceUpdate(data.balance);
       onLogin();
       navigate("/");
     } catch (error) {
@@ -45,6 +46,7 @@ export default function Login({ onLogin }) {
       setLoading(false);
     }
   };
+  
 
   const handleCadastroSubmit = async (e) => {
     e.preventDefault();

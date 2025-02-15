@@ -51,6 +51,10 @@ export default function Bookstore() {
 
     const socketConnection = new WebSocket(VITE_NOTIFICATIONS_WS_URL);
 
+    socketConnection.onopen = () => {
+  console.log("Conectado ao servidor de notificações WebSocket");
+};
+
     socketConnection.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
@@ -78,7 +82,7 @@ export default function Bookstore() {
     return () => {
       socketConnection.close();
     };
-  }, []);
+  }, [navigate]);
 
   const handleBalanceUpdate = (newBalance) => {
     setUserBalance(newBalance);
@@ -158,37 +162,39 @@ export default function Bookstore() {
                   />
                 </div>
                 <div className="lista-livros">
-                  {booksData?.length > 0 ? (
-                    booksData.slice(page * 3, (page + 1) * 3).map((book) => (
-                      <div key={book.id} className="card">
-                        <p className="font-bold">
-                          Título: {book.bookName || book.title}
-                        </p>
-                        <p>Autor(a): {book.author || "Desconhecido"}</p>
+              {booksData?.length > 0 ? (
+                 booksData
+                  .slice(page * 3, (page + 1) * 3)
+                  .map((book) => (
+                    <div key={book.id} className="card">
+                     <p className="font-bold">
+                        Título: {book.bookName || book.title}
+                     </p>
+                      <p>Autor(a): {book.author || "Desconhecido"}</p>
                         <p>
-                          A partir de <strong>R$ {book.price}</strong>
-                        </p>
+                         A partir de <strong>R$ {book.price}</strong>
+                       </p>
 
-                        <div className="div-status">
-                          <button
-                            className="button"
+                     <div className="div-status">
+                     <button
+                          className="button"
                             onClick={() => handleBuy(book.id)}
-                          >
-                            Comprar
-                          </button>
-                          <span
-                            className={`status ${
-                              book.status?.toLowerCase() || ""
-                            }`}
-                          >
-                            Status: {book.status || "Pendente"}
-                          </span>
-                        </div>
-                      </div>
+                        >
+                          Comprar
+                       </button>
+                      <span
+                           className={`status ${
+                         book.status?.toLowerCase() || ""
+                         }`}
+                         >
+                          Status: {book.status || "Pendente"}
+                       </span>
+                     </div>
+                   </div>
                     ))
-                  ) : (
-                    <p className="mensagem">Nenhum livro encontrado.</p>
-                  )}
+                   ) : (
+                 <p className="mensagem">Nenhum livro encontrado.</p>
+                 )}
                 </div>
                 <div className="pagination">
                   {page > 0 && (
@@ -210,13 +216,13 @@ export default function Bookstore() {
                 </div>
               </div>
             ) : (
-              <Login onLogin={() => setIsLoggedIn(true)} />
+              <Login onLogin={() => setIsLoggedIn(true)}  onBalanceUpdate={handleBalanceUpdate}/>
             )
           }
         />
         <Route
           path="/login"
-          element={<Login onLogin={() => setIsLoggedIn(true)} />}
+          element={<Login onLogin={() => setIsLoggedIn(true)}  onBalanceUpdate={handleBalanceUpdate}  />}
         />
         <Route
           path="/CadastroLivro"
