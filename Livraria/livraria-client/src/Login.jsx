@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { VITE_API_BASE_URL, VITE_NOTIFICATIONS_WS_URL } from "./config";
 
-
 export default function Login({ onLogin }) {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
@@ -35,9 +34,9 @@ export default function Login({ onLogin }) {
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || "Erro ao fazer login");
 
-      localStorage.setItem("authToken", JSON.stringify(data.token));
+      localStorage.setItem("authToken", data.token);
       localStorage.setItem("userBalance", data.balance);
-      localStorage.setItem("userId", data.userId);
+      localStorage.setItem("userId", data.id);
       onLogin();
       navigate("/");
     } catch (error) {
@@ -56,7 +55,7 @@ export default function Login({ onLogin }) {
       const response = await fetch(`${VITE_API_BASE_URL}/api/auth/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nome, email, password, balance: 1000}),
+        body: JSON.stringify({ name, email, password, balance: 0 }),
       });
 
       if (!response.ok) throw new Error("Erro ao cadastrar usuário");
@@ -73,60 +72,63 @@ export default function Login({ onLogin }) {
     <div className="container-login">
       <div className={`div-image ${showRegister ? "expand" : ""}`}>
         {!showRegister ? (
-          <button onClick={() => setShowRegister(true)} className="button cadastrar">
+          <button
+            onClick={() => setShowRegister(true)}
+            className="button cadastrar"
+          >
             Registre-se!
           </button>
         ) : (
           <div className="register-form">
-          <div className="header-cadastro">
-            <button
-              className="back-button-login"
-              onClick={() => setShowRegister(false)}
-            >
-              ⮜
-            </button>
-            <div className="cadastro-conta">Registro</div>
-          </div>
-          <form className="form" onSubmit={handleCadastroSubmit}>
-          <input
-              type="text"
-              placeholder="Nome do Cliente"
-              value={nome}
-              onChange={(e) => setNome(e.target.value)}
-              required
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <input
-              type="password"
-              placeholder="Senha"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <div className="baixo">
-              <button type="submit" className="button" disabled={loading}>
-                {loading ? "Cadastrando..." : "Registrar"}
-              </button>
+            <div className="header-cadastro">
               <button
-                className="clear"
-                type="button"
-                onClick={() => {
-                  setEmail("");
-                  setPassword("");
-                  setNome("");
-                }}
+                className="back-button-login"
+                onClick={() => setShowRegister(false)}
               >
-                Limpar
+                ⮜
               </button>
+              <div className="cadastro-conta">Registro</div>
             </div>
-          </form>
-        </div>
+            <form className="form" onSubmit={handleCadastroSubmit}>
+              <input
+                type="text"
+                placeholder="Nome do Cliente"
+                value={nome}
+                onChange={(e) => setNome(e.target.value)}
+                required
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <input
+                type="password"
+                placeholder="Senha"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <div className="baixo">
+                <button type="submit" className="button" disabled={loading}>
+                  {loading ? "Cadastrando..." : "Registrar"}
+                </button>
+                <button
+                  className="clear"
+                  type="button"
+                  onClick={() => {
+                    setEmail("");
+                    setPassword("");
+                    setNome("");
+                  }}
+                >
+                  Limpar
+                </button>
+              </div>
+            </form>
+          </div>
         )}
       </div>
       {!showRegister && (

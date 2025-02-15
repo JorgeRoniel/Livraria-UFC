@@ -1,4 +1,6 @@
 package com.ufc.br.api_gateway.dto;
 
-public record LoginResponseDTO(String token, String name) {
+import java.math.BigDecimal;
+
+public record LoginResponseDTO(int id, String name, BigDecimal balance) {
 }
