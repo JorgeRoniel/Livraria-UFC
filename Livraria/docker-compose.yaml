@@ -54,6 +54,24 @@ services:
     networks:
       - app-network
 
+  notificacoes:
+    build:
+      context: ./notificacoes
+      dockerfile: Dockerfile
+    container_name: notificacoes
+    networks:
+      - app-network
+
+  pagamentos:
+    build:
+      context: ./pagamento
+      dockerfile: Dockerfile
+    container_name: pagamentos
+    ports:
+      - "5000:5000"
+    networks:
+      - app-network
+
 volumes:
   postgres_data:
 
