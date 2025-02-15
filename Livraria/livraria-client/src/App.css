@@ -123,22 +123,22 @@ body {
   min-width: 100px;
 }
 
-.status.efetuada {
+.status.pago {
   background-color: #4caf50;
   color: white;
 }
 
-.status.processando {
+.status.pendente {
   background-color: #ffcc00;
   color: black;
 }
 
-.status.falhou {
+.status.saldo {
   background-color: #ff4d4d;
   color: white;
 }
 
-.status.nenhuma {
+.status.Awaiting {
   background-color: #ccc;
   color: black;
 }
@@ -167,11 +167,16 @@ body {
   .container{
     width: 80%;
   }
+
+  .titulo{
+    font-size: 20px;
+  }
+ 
 }
 
 @media (max-width: 610px){
   .titulo{
-    font-size: 20px;
+    font-size: 12px;
   }
 }
 
@@ -183,5 +188,9 @@ body {
 
   .logout{
     margin: 0;
+  }
+
+  .titulo{
+    font-size: 20px;
   }
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./EditarConta.css";
+import { isAuthenticated, logout } from "./auth";
 import { VITE_API_BASE_URL } from "./config";
 
 export default function EditarConta({ onBalanceUpdate }) {
@@ -56,6 +57,7 @@ export default function EditarConta({ onBalanceUpdate }) {
       );
 
       if (response.ok) {
+        logout();
         alert("Conta excluída com sucesso!");
         navigate("/login");
       } else {

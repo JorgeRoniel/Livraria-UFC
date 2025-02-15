@@ -95,38 +95,45 @@ export default function Bookstore() {
     navigate("/login");
   };
 
-  const handleBuy = (bookId) => {
+  const handleBuy = (bookId, bookPreco) => {
     setBooksData((prevBooks) =>
       prevBooks.map((book) =>
         book.id === bookId ? { ...book, status: "Processando" } : book
       )
     );
-
+  
     const userId = localStorage.getItem("userId");
-    fetch(`${VITE_API_BASE_URL}/api/order/updateStatus`, {
+    const saldoCliente = localStorage.getItem("userBalance");
+    
+    const quantidade = 1;
+  
+    fetch(`http://localhost:5000/pagamento`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userId: userId,
-        orderId: bookId,
-        status: "Processando",
+        id_pedido: bookId,
+        id_cliente: userId,
+        quantidade: quantidade,
+        preco: bookPreco,
+        saldo_cliente: saldoCliente,
       }),
     })
       .then((res) => {
         if (!res.ok) {
-          throw new Error("Falha ao atualizar status do pedido");
+          throw new Error("Falha ao processar pagamento");
         }
         return res.json();
       })
       .then((response) => {
-        console.log("Status do pedido atualizado na API:", response);
+        console.log("Resultado do pagamento:", response);
       })
       .catch((error) => {
-        console.error("Erro ao atualizar status do pedido via API:", error);
+        console.error("Erro ao processar pagamento:", error);
       });
   };
+  
 
   return (
     <>
@@ -178,13 +185,13 @@ export default function Bookstore() {
                      <div className="div-status">
                      <button
                           className="button"
-                            onClick={() => handleBuy(book.id)}
+                            onClick={() => handleBuy(book.id, book.price)}
                         >
                           Comprar
                        </button>
                       <span
                            className={`status ${
-                         book.status?.toLowerCase() || ""
+                         book.status?.toLowerCase() || "Awaiting"
                          }`}
                          >
                           Status: {book.status || "Pendente"}

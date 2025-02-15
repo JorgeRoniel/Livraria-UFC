@@ -60,16 +60,5 @@ def iniciar_grpc(gerenciador):
 if __name__ == "__main__":
     gerenciador = GerenciadorWebSocket()
     loop = asyncio.get_event_loop()
-
     loop.create_task(servidor_websocket(gerenciador))
-
-    grpc_task = loop.run_in_executor(None, iniciar_grpc, gerenciador)
-
-    print("Servidor WebSocket rodando na porta 8765")
-    
-    try:
-        loop.run_forever()
-    except KeyboardInterrupt:
-        pass
-    finally:
-        loop.close()
+    iniciar_grpc(gerenciador)

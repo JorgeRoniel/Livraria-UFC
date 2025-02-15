@@ -1,13 +1,13 @@
- FROM python:3.9
+FROM python:3.9
 
- WORKDIR /app
+WORKDIR /app
 
- COPY . .
+COPY . .
 
- ENV PYTHONPATH=/app/livraria
+ENV PYTHONPATH=/app/livraria
 
- RUN pip install grpcio grpcio-tools websockets
-  
- EXPOSE 8765
+RUN pip install grpcio grpcio-tools websockets
 
- CMD ["python", "notificacao_server.py"]
+EXPOSE 8765
+
+CMD ["python", "notificacao_server.py"]

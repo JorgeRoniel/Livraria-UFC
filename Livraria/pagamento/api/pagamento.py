@@ -17,12 +17,12 @@ class Pagamento:
         conn.close()
         return saldo
     
-    def processar_pagamento(self, id_cliente):
-        saldo = self.consultar_saldo(id_cliente)
+    def processar_pagamento(self):
+        saldo = self.consultar_saldo(self.id_cliente)
         if saldo >= self.preco:
             conn = conexao()
             cursor = conn.cursor()
-            cursor.execute(f"UPDATE users SET balance = {saldo - self.preco} WHERE id = {id_cliente}")
+            cursor.execute(f"UPDATE users SET balance = {saldo - self.preco} WHERE id = {self.id_cliente}")
             cursor.execute(f"UPDATE orders SET status = 'paid' WHERE id = {self.id_pedido}")
             conn.commit()
             conn.close()
