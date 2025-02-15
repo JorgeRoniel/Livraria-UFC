@@ -66,8 +66,8 @@ public class OrdersServiceImpl implements OrderServices {
             Connection c = conn();
             Statement st = statement();
 
-            String sql = "SELECT o.id, o.book_name, o.price, o.status, o.user_id FROM orders o INNER JOIN users u ON o.user_id = "+i+";";
-            st.execute(sql);
+            String sql = "SELECT o.id, o.book_name, o.price, o.status, o.user_id FROM orders o WHERE o.user_id = "+i+";";
+            st.executeQuery(sql);
 
             ResultSet rs = st.getResultSet();
 

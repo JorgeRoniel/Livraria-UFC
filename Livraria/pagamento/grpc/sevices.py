@@ -4,7 +4,6 @@ import pagamento.grpc.protos.pagamento_pb2_grpc as pagamento_pb2_grpc
 
 class NotificacaoService(pagamento_pb2_grpc.NotificacaoServiceServicer):
     def NotificarPagamento(self, request, context):
-        # Enviar notificação para o servidor de notificações
         print(f"Pagamento notificado: Pedido {request.id_pedido}, Status {request.status}")
         return pagamento_pb2.NotificacaoResposta(mensagem="Notificação enviada")
 
