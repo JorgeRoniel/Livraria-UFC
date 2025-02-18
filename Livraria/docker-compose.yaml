@@ -54,6 +54,16 @@ services:
     networks:
       - app-network
 
+
+  pagamentos:
+    build:
+      context: ./pagamento
+      dockerfile: Dockerfile
+    container_name: pagamentos
+    ports:
+      - "5000:5000"
+    networks:
+      - app-network
   notificacoes:
     build:
       context: .
@@ -63,16 +73,6 @@ services:
       - "8765:8765"
     depends_on:
      - pagamentos
-    networks:
-      - app-network
-
-  pagamentos:
-    build:
-      context: ./pagamento
-      dockerfile: Dockerfile
-    container_name: pagamentos
-    ports:
-      - "5000:5000"
     networks:
       - app-network
 

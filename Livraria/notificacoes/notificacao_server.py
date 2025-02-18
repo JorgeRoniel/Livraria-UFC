@@ -60,5 +60,8 @@ def iniciar_grpc(gerenciador):
 if __name__ == "__main__":
     gerenciador = GerenciadorWebSocket()
     loop = asyncio.get_event_loop()
+    
     loop.create_task(servidor_websocket(gerenciador))
-    iniciar_grpc(gerenciador)
+    loop.create_task(asyncio.to_thread(iniciar_grpc, gerenciador))
+    
+    loop.run_forever()

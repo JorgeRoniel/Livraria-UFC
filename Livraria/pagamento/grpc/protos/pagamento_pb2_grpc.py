@@ -3,7 +3,8 @@
 import grpc
 import warnings
 
-import pagamento_pb2 as pagamento__pb2
+from pagamento.grpc.protos import pagamento_pb2 as pagamento__pb2
+
 
 GRPC_GENERATED_VERSION = '1.70.0'
 GRPC_VERSION = grpc.__version__

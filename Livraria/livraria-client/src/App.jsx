@@ -133,6 +133,11 @@ export default function Bookstore() {
         console.error("Erro ao processar pagamento:", error);
       });
   };
+
+  const filteredBooks = booksData.filter((book) => {
+    const nomeLivro = (book.bookName || book.title || "").toLowerCase();
+    return nomeLivro.includes(search.toLowerCase());
+  });
   
 
   return (
@@ -169,8 +174,8 @@ export default function Bookstore() {
                   />
                 </div>
                 <div className="lista-livros">
-              {booksData?.length > 0 ? (
-                 booksData
+              {filteredBooks?.length > 0 ? (
+                 filteredBooks
                   .slice(page * 3, (page + 1) * 3)
                   .map((book) => (
                     <div key={book.id} className="card">
